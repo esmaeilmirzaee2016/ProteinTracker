@@ -20,14 +20,14 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 
-    @Bind(R.id.input_email)
-    EditText _emailText;
-    @Bind(R.id.input_password)
-    EditText _passwordText;
-    @Bind(R.id.btn_login)
-    Button _loginButtont;
-    @Bind(R.id.link_signup)
-    TextView _signupLink;
+    @Bind(R.id.ETEmailAddress)
+    EditText etEmailAddress;
+    @Bind(R.id.ETPassword)
+    EditText etPassword;
+    @Bind(R.id.BtnLogin)
+    Button btnLogin;
+    @Bind(R.id.TVSignup)
+    TextView tvSignup;
 
 
     @Override
@@ -37,14 +37,14 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-        _loginButtont.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 login();
             }
         });
 
-        _signupLink.setOnClickListener(new View.OnClickListener() {
+        tvSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        _loginButtont.setEnabled(false);
+        btnLogin.setEnabled(false);
 
         final ProgressDialog progressDialog =
                 new ProgressDialog(LoginActivity.this, R.style.AppTheme_Dark_Dialog);
@@ -69,8 +69,8 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+        String email = etEmailAddress.getText().toString();
+        String password = etPassword.getText().toString();
 
         // TODO: Implement your own authentication here
         new android.os.Handler().postDelayed(new Runnable() {
@@ -102,34 +102,34 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginSuccess() {
-        _loginButtont.setEnabled(true);
+        btnLogin.setEnabled(true);
         finish();
     }
 
     public void onLoginFailed() {
         Toast.makeText(getBaseContext(), "Login Failed", Toast.LENGTH_LONG).show();
 
-        _loginButtont.setEnabled(true);
+        btnLogin.setEnabled(true);
     }
 
     public boolean validate() {
         boolean valid = true;
 
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+        String email = etEmailAddress.getText().toString();
+        String password = etPassword.getText().toString();
 
         if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText.setError("enter a valid email address");
+            etEmailAddress.setError("enter a valid email address");
             valid = false;
         } else {
-            _emailText.setError(null);
+            etEmailAddress.setError(null);
         }
 
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("Between 4 and 10 alphanumeric character");
+            etPassword.setError("Between 4 and 10 alphanumeric character");
             valid = false;
         } else {
-            _passwordText.setError(null);
+            etPassword.setError(null);
         }
 
         return valid;
